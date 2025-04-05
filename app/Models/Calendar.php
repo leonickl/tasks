@@ -21,7 +21,7 @@ use Illuminate\Support\Collection;
  * @property bool $default
  * @property-read Remote $remote
  * @property-read Collection<int, Task> $tasks
- * @property-read $full_href
+ * @property-read string $full_href
  */
 class Calendar extends Model
 {
@@ -65,17 +65,17 @@ class Calendar extends Model
         return $this->ctag === Client::ctag($this);
     }
 
-    protected function remote(): BelongsTo
+    public function remote(): BelongsTo
     {
         return $this->belongsTo(Remote::class);
     }
 
-    protected function tasks(): HasMany
+    public function tasks(): HasMany
     {
         return $this->hasMany(Task::class);
     }
 
-    protected function fullHref(): Attribute
+    public function fullHref(): Attribute
     {
         return Attribute::get(fn () => trim($this->remote->href, '/').'/'.Arr::last(explode('/', (trim($this->href, '/')))));
     }
