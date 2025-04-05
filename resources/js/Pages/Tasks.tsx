@@ -1,10 +1,19 @@
-@php /** @var Illuminate\Contracts\Pagination\Paginator $tasks */ @endphp
+import TaskInline from '@/Components/TaskInline';
+import App from '@/Layouts/App';
+import { PageProps } from '@/types';
+import { Task } from '@/types/Task';
 
-<div class="full-width">
+export default function Tasks({
+    tasks,
+    title,
+}: PageProps<{ tasks: Task[]; title: string }>) {
+    // <livewire:task-list :filter="$filter" :params="$params ?? []"/>
 
-    <div class="table-controls">
-
-        {{-- TODO set somewhere --}}
+    return (
+        <App title={title}>
+            <div>
+                <div>
+                    {/* {{-- TODO set somewhere --}}
 {{--        <form action="{{ route('set') }}" class="task-list-settings">--}}
 {{--            <div>--}}
 {{--                <label>With completed:</label>--}}
@@ -17,9 +26,9 @@
 {{--            </div>--}}
 
 {{--            <input type="submit" value="Set">--}}
-{{--        </form>--}}
+{{--        </form>--}} */}
 
-        <div class="pagination-controls">
+                    {/* <div class="pagination-controls">
             @if($tasks->currentPage() > 1)
                 <div><a href="{{ $tasks->url(1) }}">&lt;&lt;</a></div>
                 <div><a href="{{ $tasks->previousPageUrl() }}">&lt;</a></div>
@@ -31,15 +40,17 @@
                 <div><a href="{{ $tasks->nextPageUrl() }}">&gt;</a></div>
                 <div><a href="{{ $tasks->url($tasks->lastPage()) }}">&gt;&gt;</a></div>
             @endif
-        </div>
-    </div>
+        </div> */}
+                </div>
 
-    <div class="tasks">
-        @forelse($tasks as $key => $task)
-            <livewire:task-inline :task="$task" wire:key="$key"/>
-        @empty
-            <b>No Tasks Found</b>
-        @endforelse
-    </div>
+                <div>
+                    {tasks.map((task) => (
+                        <TaskInline task={task} />
+                    ))}
 
-</div>
+                    {tasks.length === 0 && <b>No Tasks Found</b>}
+                </div>
+            </div>
+        </App>
+    );
+}

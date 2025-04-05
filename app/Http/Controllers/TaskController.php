@@ -6,7 +6,7 @@ use App\Models\Calendar;
 use App\Models\Filter;
 use App\Models\Tag;
 use App\Models\Task;
-use Illuminate\Contracts\View\View;
+use App\Tasks;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -19,7 +19,7 @@ class TaskController extends Controller
     {
         return inertia('Tasks', [
             'title' => 'All Tasks',
-            'filter' => 'all',
+            'tasks' => Tasks::make('all'),
         ]);
     }
 
@@ -27,7 +27,7 @@ class TaskController extends Controller
     {
         return inertia('Tasks', [
             'title' => 'Today',
-            'filter' => 'today',
+            'tasks' => Tasks::make('today'),
         ]);
     }
 
@@ -35,7 +35,7 @@ class TaskController extends Controller
     {
         return inertia('Tasks', [
             'title' => 'Tomorrow',
-            'filter' => 'tomorrow',
+            'tasks' => Tasks::make('tomorrow'),
         ]);
     }
 
@@ -45,8 +45,7 @@ class TaskController extends Controller
 
         return inertia('Tasks', [
             'title' => 'Search for "'.$search.'"',
-            'filter' => 'search',
-            'params' => [$search],
+            'tasks' => Tasks::make('search', [$search]),
         ]);
     }
 
@@ -54,7 +53,7 @@ class TaskController extends Controller
     {
         return inertia('Tasks', [
             'title' => 'Last Modified',
-            'filter' => 'lastModified',
+            'tasks' => Tasks::make('lastModified'),
         ]);
     }
 
@@ -120,8 +119,7 @@ END:VCALENDAR';
     {
         return inertia('Tasks', [
             'title' => str_starts_with($tag, '@') ? 'Person '.$tag->name : 'Tag #'.$tag->name,
-            'filter' => 'forTag',
-            'params' => [$tag],
+            'tasks' => Tasks::make('forTag', [$tag]),
         ]);
     }
 
@@ -136,7 +134,20 @@ END:VCALENDAR';
     {
         return inertia('Tasks', [
             'title' => 'Filter',
-            'filter' => $filter->id,
+            'tasks' => Tasks::make($filter->id),
+        ]);
+    }
+
+    public function create()
+    {
+        return inertia('CreateTask');
+    }
+
+    public function edit(Task $task)
+    {
+        return inertia('EditTask', [
+            'task' => $task,
+            'tags' => Tag::all(),
         ]);
     }
 }

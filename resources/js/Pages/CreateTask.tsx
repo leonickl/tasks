@@ -1,23 +1,28 @@
-<x-app>
+import App from '@/Layouts/App';
+import { PageProps } from '@/types';
+import { Tag } from '@/types/Tag';
+import Calendar from '../Components/Task/Calendar';
+import Description from '../Components/Task/Description';
+import Due from '../Components/Task/Due';
+import Priority from '../Components/Task/Priority';
+import Summary from '../Components/Task/Summary';
+import Tags from '../Components/Task/Tags';
 
-    <h1>Create New Task</h1>
+export default function CreateTask({ tags }: PageProps<{ tags: Tag[] }>) {
+    return (
+        <App title="Create New Task">
+            <form action={route('task.store')} method="post">
+                <Calendar />
+                <Summary />
+                <Due />
+                <Priority />
+                <Tags all={tags} />
+                <Description />
 
-    <form action="{{ route('task.store') }}" class="task-full" method="post">
+                <input type="submit" value="Save" />
+            </form>
 
-        @csrf
-
-        <x-task.calendar/>
-        <x-task.summary/>
-        <x-task.due/>
-        <x-task.priority/>
-        <x-task.tags/>
-        <x-task.description/>
-
-        <input type="submit" value="Save">
-
-    </form>
-
-    <script>
+            {/* <script>
         function setVariableInputLength() {
             document.querySelectorAll('.variable-input-length').forEach(elem => {
                 const action = () => {
@@ -51,6 +56,7 @@
         })
 
         setVariableInputLength()
-    </script>
-
-</x-app>
+    </script> */}
+        </App>
+    );
+}

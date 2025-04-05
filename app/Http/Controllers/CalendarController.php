@@ -10,7 +10,7 @@ class CalendarController extends Controller
     public function index(Calendar $calendar)
     {
         return inertia('Tasks', [
-            'title' => 'Calendar ' . $calendar->name,
+            'title' => 'Calendar '.$calendar->name,
             'filter' => 'forCalendar',
             'params' => [$calendar],
         ]);

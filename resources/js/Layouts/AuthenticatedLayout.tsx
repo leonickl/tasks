@@ -14,6 +14,16 @@ export default function Authenticated({
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
+    const nav = {
+        dashboard: 'Dashboard',
+        settings: 'Settings',
+        tasks: 'Tasks',
+        filters: 'Filters',
+        sync: 'Sync',
+        tags: 'Tags',
+        people: 'People',
+    };
+
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
             <nav className="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -27,12 +37,14 @@ export default function Authenticated({
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route('dashboard')}
-                                    active={route().current('dashboard')}
-                                >
-                                    Dashboard
-                                </NavLink>
+                                {Object.entries(nav).map(([key, label]) => (
+                                    <NavLink
+                                        href={route(key)}
+                                        active={route().current(key)}
+                                    >
+                                        {label}
+                                    </NavLink>
+                                ))}
                             </div>
                         </div>
 
@@ -131,12 +143,14 @@ export default function Authenticated({
                     }
                 >
                     <div className="space-y-1 pb-3 pt-2">
-                        <ResponsiveNavLink
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
-                        >
-                            Dashboard
-                        </ResponsiveNavLink>
+                        {Object.entries(nav).map(([key, label]) => (
+                            <ResponsiveNavLink
+                                href={route(key)}
+                                active={route().current(key)}
+                            >
+                                {label}
+                            </ResponsiveNavLink>
+                        ))}
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">

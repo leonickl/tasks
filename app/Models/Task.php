@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Client;
 use App\Jobs\UploadTask;
 use App\Parser\Parser;
 use App\Priority;
@@ -11,7 +10,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -58,27 +56,26 @@ class Task extends Model
     {
         $this->writeToIcs();
 
-        try {
-            $return = parent::save($options);
-        } catch (UniqueConstraintViolationException $e) {
-            dd(
-                $this->toArray(),
-                Task::query()
-                    ->where('calendar_id', $this->calendar_id)
-                    ->where('uid', $this->uid)
-                    ->first()
-                    ->toArray(),
-                debug_backtrace(),
-            );
-        }
+        $return = parent::save($options);
 
         $this->cache();
 
-        if (!$preventUpload) {
+        if (! $preventUpload) {
             UploadTask::dispatch($this);
         }
 
         return $return;
+    }
+
+    #[Override]
+    public function toArray(): array
+    {
+        return [
+            ...parent::toArray(),
+            'children' => $this->children,
+            'dueDate' => $this->hasDue() ? $this->due_carbon->format('Y-m-d') : null,
+            'dueTime' => $this->hasDueTime() ? $this->due_carbon->format('H:i') : null,
+        ];
     }
 
     public function createOrUpdate(): self
@@ -164,7 +161,7 @@ class Task extends Model
     public function tagObjects(): Collection
     {
         return collect($this->tags)
-            ->map(fn(string $tag) => Tag::get($tag));
+            ->map(fn (string $tag) => Tag::get($tag));
     }
 
     protected function dueFormatted(): Attribute
@@ -211,11 +208,11 @@ class Task extends Model
     {
         return Attribute::make(
             get: function (string $tags) {
-                if (!json_validate($tags)) {
+                if (! json_validate($tags)) {
                     return [];
                 }
 
-                $tags = array_filter(json_decode($tags), fn(string $tag) => trim($tag) !== '');
+                $tags = array_filter(json_decode($tags), fn (string $tag) => trim($tag) !== '');
 
                 foreach ($tags as $tag) {
                     Tag::get($tag);
@@ -224,7 +221,7 @@ class Task extends Model
                 return $tags;
             },
             set: function (array $tags) {
-                $tags = array_filter($tags, fn(string $tag) => trim($tag) !== '');
+                $tags = array_filter($tags, fn (string $tag) => trim($tag) !== '');
 
                 foreach ($tags as $tag) {
                     Tag::get($tag);
@@ -237,14 +234,14 @@ class Task extends Model
 
     protected function dueCarbon(): Attribute
     {
-        return Attribute::get(fn() => Carbon::make($this->attributes['due']));
+        return Attribute::get(fn () => Carbon::make($this->attributes['due']));
     }
 
     protected function fullHref(): Attribute
     {
         return Attribute::get(
-            fn() => trim($this->calendar->full_href, '/')
-                . '/' . Arr::last(explode('/', (trim($this->href, '/'))))
+            fn () => trim($this->calendar->full_href, '/')
+                .'/'.Arr::last(explode('/', (trim($this->href, '/'))))
         );
     }
 

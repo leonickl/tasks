@@ -6,15 +6,15 @@ use App\Models\Calendar;
 use App\Models\Filter;
 use App\Models\Tag;
 use App\Models\Task;
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 
 class Tasks
 {
-    public static function make(string $filter, mixed ...$params): Paginator
+    public static function make(string $filter, mixed ...$params): Collection
     {
-        return match ($filter) {
+        return (match ($filter) {
             'all' => self::all(),
             'today' => self::today(),
             'tomorrow' => self::tomorrow(),
@@ -23,7 +23,7 @@ class Tasks
             'search' => self::search(...$params),
             'lastModified' => self::lastModified(),
             default => self::parse(Filter::find($filter)->filter),
-        };
+        })->get();
     }
 
     private static function base(bool $hideChildren = true): Builder
@@ -44,13 +44,12 @@ class Tasks
             ->orderBy('priority', 'desc');
     }
 
-    private static function all(): Paginator
+    private static function all(): Builder
     {
-        return self::base()
-            ->paginate(self::perPage());
+        return self::base();
     }
 
-    private static function today(): Paginator
+    private static function today(): Builder
     {
         return self::base()
             ->whereNot('due', '')
@@ -59,11 +58,10 @@ class Tasks
                 ->whereNot('due', '')
                 ->where('due', '<', now()->format('Ymd'))
                 ->where('completed', false)
-                ->where('parent_uid', ''))
-            ->paginate(self::perPage());
+                ->where('parent_uid', ''));
     }
 
-    private static function tomorrow(): Paginator
+    private static function tomorrow(): Builder
     {
         return self::base()
             ->whereNot('due', '')
@@ -72,39 +70,34 @@ class Tasks
                 ->whereNot('due', '')
                 ->where('due', '<', Carbon::tomorrow()->format('Ymd'))
                 ->where('completed', false)
-                ->where('parent_uid', ''))
-            ->paginate(self::perPage());
+                ->where('parent_uid', ''));
     }
 
-    private static function forCalendar(Calendar $calendar): Paginator
+    private static function forCalendar(Calendar $calendar): Builder
     {
         return self::base()
-            ->where('calendar_id', $calendar->id)
-            ->paginate(self::perPage());
+            ->where('calendar_id', $calendar->id);
     }
 
-    private static function forTag(Tag $tag): Paginator
+    private static function forTag(Tag $tag): Builder
     {
         return self::base()
-            ->whereJsonContains('tags', $tag->name)
-            ->paginate(self::perPage());
+            ->whereJsonContains('tags', $tag->name);
     }
 
-    private static function search(string $search): Paginator
+    private static function search(string $search): Builder
     {
         return self::base(hideChildren: false)
             ->where(fn (Builder $builder) => $builder
                 ->orWhereRaw('lower(summary) like ? ', ['%'.$search.'%'])
                 ->orWhereRaw('lower(description) like ? ', ['%'.$search.'%'])
-                ->orWhereRaw('lower(tags) like ? ', ['%'.$search.'%']))
-            ->paginate(self::perPage());
+                ->orWhereRaw('lower(tags) like ? ', ['%'.$search.'%']));
     }
 
-    private static function lastModified(): Paginator
+    private static function lastModified(): Builder
     {
         return Task::query()
-            ->orderByDesc('updated_at')
-            ->paginate(self::perPage());
+            ->orderByDesc('updated_at');
     }
 
     public static function perPage(): int
@@ -117,7 +110,7 @@ class Tasks
      *
      * @return void
      */
-    private static function parse(string $key): Paginator
+    private static function parse(string $key): Builder
     {
         if (! json_validate($key)) {
             dd('invalid filter: '.$key);
@@ -135,7 +128,7 @@ class Tasks
             $builder = self::parseStep($builder, $step);
         }
 
-        return $builder->paginate(self::perPage());
+        return $builder;
     }
 
     private static function parseStep(Builder $builder, object $step): Builder
