@@ -1,22 +1,4 @@
-* {
-    --col: black;
-    --col-light: gray;
-    --bg: white;
-    --accent: #3584e4;
-    --accent-dark: #185197;
-}
 
-/*
-@media (prefers-color-scheme: dark) {
-    * {
-        --col: #e1e1e1;
-        --col-light: #757575;
-        --bg: #222;
-        --accent: #3584e4;
-        --accent-dark: #185197;
-    }
-}
-*/
 
 body {
     color: var(--col);
@@ -26,7 +8,7 @@ body {
 * {
     color: inherit;
     background-color: inherit;
-    font-family: "Segoe UI", sans-serif;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 body {
@@ -276,23 +258,6 @@ textarea {
     gap: 20px;
 }
 
-button,
-input[type="button"],
-input[type="submit"],
-a.btn {
-    background: var(--accent);
-    color: white;
-    border: 1px var(--accent-dark) solid;
-    border-radius: 3px;
-    padding: 5px 10px;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 13px;
-    display: block;
-    box-sizing: content-box;
-    text-align: center;
-}
-
 .secondary {
     background: var(--bg) !important;
     color: var(--col) !important;
@@ -451,7 +416,11 @@ form.task-full {
     width: 50%;
     min-width: 600px;
 
-    & .list, .due, .priority, .tags, .description {
+    & .list,
+    .due,
+    .priority,
+    .tags,
+    .description {
         display: flex;
         flex-direction: row;
         gap: 5px;
@@ -476,7 +445,7 @@ form.task-full {
     }
 
     .grow-wrap::after {
-        content: attr(data-replicated-value) " ";
+        content: attr(data-replicated-value) ' ';
         white-space: pre-wrap;
         visibility: hidden;
     }

@@ -1,13 +1,15 @@
+import Button from '@/Components/Button';
 import App from '@/Layouts/App';
 
 export default function Settings() {
     return (
-        <App title="Settings">
-            <div>
-                <a href={route('remotes')}>Accounts</a>
-                <a href={route('open-logs')}>Show Logs</a>
-                <a href={route('open-folder')}>Open App Folder</a>
-            </div>
-        </App>
+        <App
+            title="Settings"
+            nav={[
+                <Button href={route('remotes')}>Accounts</Button>,
+                <Button href={route('logs')}>Show Logs</Button>,
+                <Button href={route('app-directory')}>Open App Folder</Button>,
+            ]}
+        />
     );
 }

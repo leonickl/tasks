@@ -12,4 +12,6 @@ export type Calendar = {
     remote: Remote;
     tasks: Task[];
     full_href: string;
+    taskCount: number;
+    taskCountOpen: number;
 };

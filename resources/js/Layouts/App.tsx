@@ -5,9 +5,11 @@ import AuthenticatedLayout from './AuthenticatedLayout';
 export default function App({
     title,
     children,
+    nav = [],
 }: {
     title: string;
-    children: ReactNode;
+    children?: ReactNode;
+    nav?: ReactNode[];
 }) {
     return (
         <AuthenticatedLayout
@@ -22,7 +24,11 @@ export default function App({
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
-                        <div className="p-6 text-gray-900 dark:text-gray-100">
+                        <div className="flex flex-col gap-5 p-6 text-gray-900 dark:text-gray-100 items-center">
+                            {nav && (
+                                <nav className="flex flex-row gap-5">{nav}</nav>
+                            )}
+
                             {children}
                         </div>
                     </div>

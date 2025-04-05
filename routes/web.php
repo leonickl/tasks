@@ -66,8 +66,8 @@ Route::middleware('auth')->group(function () {
     Route::get('cache-all', [SettingsController::class, 'cacheAll'])->name('cache-all');
     Route::get('sync', [SettingsController::class, 'sync'])->name('sync');
 
-    Route::get('open-logs', [SettingsController::class, 'logs'])->name('open-logs');
-    Route::get('open-folder', [SettingsController::class, 'folder'])->name('open-folder');
+    Route::get('logs', [SettingsController::class, 'logs'])->name('logs');
+    Route::get('app-directory', [SettingsController::class, 'folder'])->name('app-directory');
 });
 
 require __DIR__.'/auth.php';

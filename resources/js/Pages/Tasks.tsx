@@ -44,8 +44,8 @@ export default function Tasks({
                 </div>
 
                 <div>
-                    {tasks.map((task) => (
-                        <TaskInline task={task} />
+                    {tasks.map((task, index) => (
+                        <TaskInline task={task} border={index !== 0} />
                     ))}
 
                     {tasks.length === 0 && <b>No Tasks Found</b>}

@@ -32,8 +32,7 @@ class SettingsController extends Controller
 
     public function logs(): RedirectResponse
     {
-        // TODO: implement
-        return back();
+        return redirect(url('log-viewer'));
     }
 
     public function folder(): RedirectResponse

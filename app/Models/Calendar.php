@@ -29,6 +29,15 @@ class Calendar extends Model
 
     protected $fillable = ['remote_id', 'href', 'name', 'ctag', 'color'];
 
+    public function toArray(): array
+    {
+        return [
+            ...parent::toArray(),
+            'taskCount' => count($this->tasks),
+            'taskCountOpen' => count($this->tasks->filter(fn (Task $task) => ! $task->completed)),
+        ];
+    }
+
     public static function default(?Calendar $calendar = null): ?self
     {
         if ($calendar !== null) {

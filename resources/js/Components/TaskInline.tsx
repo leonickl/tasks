@@ -8,9 +8,11 @@ import Checkbox from './Task/Checkbox';
 
 export default function TaskInline({
     task,
+    border,
     indent = 0,
 }: {
     task: Task;
+    border: boolean;
     indent?: number;
 }) {
     function toggleChildren() {}
@@ -24,24 +26,22 @@ export default function TaskInline({
             )}
 
             <div
-                className={new Priority(task.priority).color()}
+                className={`grid grid-cols-4 ${new Priority(task.priority).color()} ${border && 'border-t'} py-5`}
                 style={{ marginLeft: `${indent * 40}px` }}
             >
                 <Checkbox task={task} />
 
-                <div>
-                    <div>
-                        <div>
-                            <div>{task.summary}</div>
+                <div className="flex flex-col">
+                    <div className="flex flex-row">
+                        <div>{task.summary}</div>
 
-                            {task.tags.map((tag) => (
-                                <Tag tag={tag} />
-                            ))}
+                        {task.tags.map((tag) => (
+                            <Tag tag={tag} />
+                        ))}
 
-                            {indent === 0 && task.parent && (
-                                <>Parent: {task.parent.summary}</>
-                            )}
-                        </div>
+                        {indent === 0 && task.parent && (
+                            <>Parent: {task.parent.summary}</>
+                        )}
                     </div>
 
                     {task.description && (
@@ -58,7 +58,11 @@ export default function TaskInline({
 
             {showChildren &&
                 task.children.map((child) => (
-                    <TaskInline auth={auth} task={child} indent={indent + 1} />
+                    <TaskInline
+                        border={false}
+                        task={child}
+                        indent={indent + 1}
+                    />
                 ))}
         </div>
     );

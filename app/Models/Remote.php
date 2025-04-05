@@ -24,6 +24,14 @@ class Remote extends Model
 
     protected $fillable = ['name', 'href', 'username', 'password'];
 
+    public function toArray(): array
+    {
+        return [
+            ...parent::toArray(),
+            'calendars' => $this->calendars,
+        ];
+    }
+
     /**
      * Compares calendar list from remote and local, adds missing
      * calendars and updates their tasks if necessary.
