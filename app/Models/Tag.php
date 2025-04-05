@@ -68,6 +68,14 @@ class Tag extends Model
         }
     }
 
+    public function toArray(): array
+    {
+        return [
+            ...parent::toArray(),
+            'nameWithoutPrefix' => $this->nameWithoutPrefix(),
+        ];
+    }
+
     public function nameWithoutPrefix(): string
     {
         return str_starts_with($this->name, '@') ? substr($this->name, 1) : $this->name;

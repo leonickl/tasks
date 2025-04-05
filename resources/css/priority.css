@@ -1,0 +1,43 @@
+.priority-line {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    gap: 30px;
+
+    .radio label {
+        cursor: pointer;
+    }
+
+    .radio .priority-0 {
+        --radio-color: gray;
+    }
+
+    .radio .priority-9 {
+        --radio-color: blue;
+    }
+
+    .radio .priority-5 {
+        --radio-color: #f8a100;
+    }
+
+    .radio .priority-1 {
+        --radio-color: #cb0000;
+    }
+
+    .radio input {
+        display: none;
+    }
+
+    .radio label {
+        display: block;
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        border: 4px var(--radio-color) solid;
+    }
+
+    input:checked ~ label {
+        background: var(--radio-color);
+    }
+}

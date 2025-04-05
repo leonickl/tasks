@@ -1,57 +1,39 @@
-import { default as P } from '@/Priority';
+import React from 'react';
 import { Flag } from 'react-bootstrap-icons';
 
-export default function Priority({ priority = 0 }: { priority?: number }) {
-    const pr = new P(priority);
+const PRIORITY_LEVELS = [
+    { value: 0, color: 'gray' },
+    { value: 9, color: 'blue' },
+    { value: 5, color: '#f8a100' },
+    { value: 1, color: '#cb0000' },
+];
 
+export default function Priority({
+    priority,
+    setPriority,
+}: {
+    priority: number;
+    setPriority: React.Dispatch<React.SetStateAction<number>>;
+}) {
     return (
-        <div>
+        <div className="flex flex-row items-center gap-5">
             <Flag />
 
-            <div>
-                <div>
-                    <input
-                        type="radio"
-                        id="priority-0"
-                        name="priority"
-                        value="0"
-                        checked={pr.none()}
+            <div className="flex flex-1 justify-center gap-6">
+                {PRIORITY_LEVELS.map(({ value, color }) => (
+                    <button
+                        type="button"
+                        key={value}
+                        onClick={() => setPriority(value)}
+                        className="h-6 w-6 rounded-full border-4"
+                        style={{
+                            borderColor: color,
+                            backgroundColor:
+                                priority === value ? color : 'transparent',
+                        }}
+                        aria-label={`Set priority ${value}`}
                     />
-                    <label htmlFor="priority-0" className="priority-0"></label>
-                </div>
-
-                <div>
-                    <input
-                        type="radio"
-                        id="priority-9"
-                        name="priority"
-                        value="9"
-                        checked={pr.low()}
-                    />
-                    <label htmlFor="priority-9" className="priority-9"></label>
-                </div>
-
-                <div>
-                    <input
-                        type="radio"
-                        id="priority-5"
-                        name="priority"
-                        value="5"
-                        checked={pr.mid()}
-                    />
-                    <label htmlFor="priority-5" className="priority-5"></label>
-                </div>
-
-                <div>
-                    <input
-                        type="radio"
-                        id="priority-1"
-                        name="priority"
-                        value="1"
-                        checked={pr.high()}
-                    />
-                    <label htmlFor="priority-1" className="priority-1"></label>
-                </div>
+                ))}
             </div>
         </div>
     );

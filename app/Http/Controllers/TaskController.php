@@ -140,7 +140,11 @@ END:VCALENDAR';
 
     public function create()
     {
-        return inertia('CreateTask');
+        return inertia('CreateTask', [
+            'allTags' => Tag::all(),
+            'defaultCalendar' => Calendar::default(),
+            'calendars' => Calendar::all(),
+        ]);
     }
 
     public function edit(Task $task)

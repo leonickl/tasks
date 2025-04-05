@@ -1,3 +1,4 @@
+import Button from '@/Components/Button';
 import TaskInline from '@/Components/TaskInline';
 import App from '@/Layouts/App';
 import { PageProps } from '@/types';
@@ -10,7 +11,10 @@ export default function Tasks({
     // <livewire:task-list :filter="$filter" :params="$params ?? []"/>
 
     return (
-        <App title={title}>
+        <App
+            title={title}
+            nav={[<Button href={route('task.create')}>Create New Task</Button>]}
+        >
             <div>
                 <div>
                     {/* {{-- TODO set somewhere --}}
