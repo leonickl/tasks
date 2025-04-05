@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('calendar_id')->constrained();
             $table->string('href');
             $table->string('etag');
-            $table->string('ical');
+            $table->text('ical');
 
             $table->boolean('completed');
             $table->string('summary');
