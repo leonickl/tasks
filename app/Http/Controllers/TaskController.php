@@ -15,44 +15,44 @@ use Illuminate\Support\Str;
 
 class TaskController extends Controller
 {
-    public function all(): View
+    public function all()
     {
-        return view('tasks', [
+        return inertia('Tasks', [
             'title' => 'All Tasks',
             'filter' => 'all',
         ]);
     }
 
-    public function today(): View
+    public function today()
     {
-        return view('tasks', [
+        return inertia('Tasks', [
             'title' => 'Today',
             'filter' => 'today',
         ]);
     }
 
-    public function tomorrow(): View
+    public function tomorrow()
     {
-        return view('tasks', [
+        return inertia('Tasks', [
             'title' => 'Tomorrow',
             'filter' => 'tomorrow',
         ]);
     }
 
-    public function search(Request $request): View
+    public function search(Request $request)
     {
         $search = strtolower($request->get('search'));
 
-        return view('tasks', [
+        return inertia('Tasks', [
             'title' => 'Search for "'.$search.'"',
             'filter' => 'search',
             'params' => [$search],
         ]);
     }
 
-    public function lastModified(): View
+    public function lastModified()
     {
-        return view('tasks', [
+        return inertia('Tasks', [
             'title' => 'Last Modified',
             'filter' => 'lastModified',
         ]);
@@ -116,9 +116,9 @@ END:VCALENDAR';
         return Redirect::route('tasks')->success('Created task '.$task->id);
     }
 
-    public function tag(Tag $tag): View
+    public function tag(Tag $tag)
     {
-        return view('tasks', [
+        return inertia('Tasks', [
             'title' => str_starts_with($tag, '@') ? 'Person '.$tag->name : 'Tag #'.$tag->name,
             'filter' => 'forTag',
             'params' => [$tag],
@@ -132,9 +132,9 @@ END:VCALENDAR';
             : [];
     }
 
-    public function filter(Filter $filter): View
+    public function filter(Filter $filter)
     {
-        return view('tasks', [
+        return inertia('Tasks', [
             'title' => 'Filter',
             'filter' => $filter->id,
         ]);

@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Filter;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 
 class FilterController extends Controller
 {
-    public function index(): View
+    public function index()
     {
-        return view('filters', [
+        return inertia('Filters', [
             'predefined' => [
                 'tasks.all' => 'All',
                 'tasks.today' => 'Today',
@@ -31,9 +30,9 @@ class FilterController extends Controller
         return redirect()->route('filters.show', $filter);
     }
 
-    public function show(Filter $filter): View
+    public function show(Filter $filter)
     {
-        return view('filter', ['filter' => $filter]);
+        return inertia('Filter', ['filter' => $filter]);
     }
 
     public function update(Filter $filter): RedirectResponse

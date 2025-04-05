@@ -5,15 +5,14 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\Jobs\SyncRemote;
 use App\Models\Remote;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class RemoteController extends Controller
 {
-    public function index(): View
+    public function index()
     {
-        return view('remotes', ['remotes' => Remote::all()]);
+        return inertia('Remotes', ['remotes' => Remote::all()]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -59,9 +58,9 @@ class RemoteController extends Controller
         Client::calendars($remote);
     }
 
-    public function calendars(Remote $remote): View
+    public function calendars(Remote $remote)
     {
-        return view('calendars', [
+        return inertia('Calendars', [
             'remote' => $remote,
         ]);
     }

@@ -4,16 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SyncAll;
 use App\Models\Task;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Native\Laravel\Facades\Shell;
-use Native\Laravel\Facades\Window;
 
 class SettingsController extends Controller
 {
-    public function index(): View
+    public function index()
     {
-        return view('settings');
+        return inertia('Settings');
     }
 
     public function set(): RedirectResponse
@@ -35,17 +32,13 @@ class SettingsController extends Controller
 
     public function logs(): RedirectResponse
     {
-        Window::open('logs')
-            ->width(1000)
-            ->height(800)
-            ->route('log-viewer.index');
-
+        // TODO: implement
         return back();
     }
 
     public function folder(): RedirectResponse
     {
-        Shell::showInFolder(storage_path());
+        // TODO: implement
 
         return back();
     }

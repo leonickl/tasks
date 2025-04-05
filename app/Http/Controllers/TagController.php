@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
-use Illuminate\View\View;
 
 class TagController extends Controller
 {
-    public function tags(): View
+    public function tags()
     {
-        return view('tags', [
+        return inertia('Tags', [
             'title' => 'Tags',
             'tags' => Tag::allTags(),
         ]);
     }
 
-    public function people(): View
+    public function people()
     {
-        return view('tags', [
+        return inertia('Tags', [
             'title' => 'People',
             'tags' => Tag::allPeople(),
         ]);
