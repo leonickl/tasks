@@ -8,7 +8,9 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TaskController;
 use App\Models\Task;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', MainController::class)->name('main');
 
@@ -57,3 +59,16 @@ Route::get('sync', [SettingsController::class, 'sync'])->name('sync');
 
 Route::get('open-logs', [SettingsController::class, 'logs'])->name('open-logs');
 Route::get('open-folder', [SettingsController::class, 'folder'])->name('open-folder');
+
+
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
