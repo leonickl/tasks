@@ -13,34 +13,49 @@ export default function Calendars({ remote }: PageProps<{ remote: Remote }>) {
                 <Button href={route('clear-remote', remote.id)}>Clear</Button>,
             ]}
         >
-            {remote.calendars.map((calendar) => (
-                <div
-                    style={{
-                        color:
-                            calendar.taskCount === 0
-                                ? 'var(--col-light)'
-                                : 'var(--col)',
-                    }}
-                >
-                    <a href={route('calendar', calendar.id)}>
-                        <b>{calendar.name}:</b>
-                    </a>
+            <div className="mt-5 grid w-full grid-cols-3 gap-10">
+                {remote.calendars.map((calendar) => (
+                    <div
+                        className="flex flex-col gap-5 rounded-md border border-gray-400 p-5 shadow-md justify-between"
+                        style={{
+                            color:
+                                calendar.taskCount === 0
+                                    ? 'var(--col-light)'
+                                    : 'var(--col)',
+                        }}
+                    >
+                        <a
+                            href={route('calendar', calendar.id)}
+                            className="font-bold underline"
+                        >
+                            {calendar.name}:
+                        </a>
 
-                    {calendar.default ? (
-                        <b>This calendar is currently set as default.</b>
-                    ) : (
-                        <Link href={route('calendar.default', calendar.id)}>
-                            Set as default
-                        </Link>
-                    )}
+                        <span>
+                            <b>CTAG: </b>
+                            {calendar.ctag}
+                        </span>
+                        <span>
+                            {`${calendar.taskCount} Tasks | ${calendar.taskCountOpen} Open`}
+                        </span>
 
-                    <em>({calendar.full_href})</em>
-                    <span>{calendar.ctag}</span>
-                    <span>
-                        {`${calendar.taskCount} Tasks | ${calendar.taskCountOpen} Open`}
-                    </span>
-                </div>
-            ))}
+                        <em className="text-gray-400">{calendar.fullHref}</em>
+
+                        {calendar.default ? (
+                            <div className="w-max rounded-md border border-green-950 bg-green-800 px-3 py-2">
+                                Current default
+                            </div>
+                        ) : (
+                            <Link
+                                href={route('calendar.default', calendar.id)}
+                                className="w-max rounded-md border border-blue-950 bg-blue-800 px-3 py-2"
+                            >
+                                Set as default
+                            </Link>
+                        )}
+                    </div>
+                ))}
+            </div>
 
             {remote.calendars.length === 0 && <b>No Calendars Found</b>}
         </App>

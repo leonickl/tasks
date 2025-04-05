@@ -35,6 +35,7 @@ class Calendar extends Model
             ...parent::toArray(),
             'taskCount' => count($this->tasks),
             'taskCountOpen' => count($this->tasks->filter(fn (Task $task) => ! $task->completed)),
+            'fullHref' => $this->full_href,
         ];
     }
 

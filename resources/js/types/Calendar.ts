@@ -11,7 +11,7 @@ export type Calendar = {
     default: boolean;
     remote: Remote;
     tasks: Task[];
-    full_href: string;
+    fullHref: string;
     taskCount: number;
     taskCountOpen: number;
 };
