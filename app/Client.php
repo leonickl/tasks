@@ -18,6 +18,8 @@ readonly class Client
     /**
      * @throws StatusCodeException
      * @throws ConnectionException
+     * 
+     * @return Generator<Calendar> returns a Calendar generator, whose objects can be then persisted to the database
      */
     public static function calendars(Remote $remote): Generator
     {
@@ -83,6 +85,9 @@ readonly class Client
 
     /**
      * @throws ConnectionException
+     * 
+     * @param string[] $hrefs an array of the hrefs for the tasks to download
+     * @return Generator<Task> returns a Task generator, whose objects can be then persisted to the database
      */
     public static function tasks(Calendar $calendar, array $hrefs): Generator
     {
