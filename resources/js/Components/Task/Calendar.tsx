@@ -1,5 +1,6 @@
 import { Calendar as C } from '@/types/Calendar';
 import { ListCheck } from 'react-bootstrap-icons';
+import Select from '../Input/Select';
 
 export default function Calendar({
     calendars,
@@ -15,16 +16,14 @@ export default function Calendar({
             <ListCheck />
 
             <div>
-                <select
-                    name="calendar_id"
-                    className="w-full rounded-md border border-gray-400 bg-gray-800"
+                <Select
+                    options={calendars.map((cal) => ({
+                        value: cal.id,
+                        label: cal.name,
+                    }))}
                     value={calendar}
-                    onChange={(e) => setCalendar(parseInt(e.target.value))}
-                >
-                    {calendars.map((calendar) => (
-                        <option value={calendar.id}>{calendar.name}</option>
-                    ))}
-                </select>
+                    setValue={setCalendar}
+                />
             </div>
         </div>
     );

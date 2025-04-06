@@ -15,6 +15,7 @@ export type Task = {
     due: string;
     dueDate: string | null;
     dueTime: string | null;
+    dueFormatted: string;
     priority: number;
     tags: Tag[];
     parent_uid: string | null | undefined;

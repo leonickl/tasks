@@ -9,7 +9,7 @@ export default function Tags({
 }: PageProps<{ title: string; tags: T[] }>) {
     return (
         <App title={title}>
-            <div>
+            <div className="flex flex-row flex-wrap justify-evenly gap-5">
                 {tags.map((tag) => (
                     <Tag tag={tag} />
                 ))}

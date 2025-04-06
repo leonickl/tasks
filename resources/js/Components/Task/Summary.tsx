@@ -1,3 +1,5 @@
+import Textarea from '../Input/Textarea';
+
 export default function Summary({
     summary,
     setSummary,
@@ -7,11 +9,10 @@ export default function Summary({
 }) {
     return (
         <div className="flex flex-row items-center gap-5">
-            <textarea
-                name="summary"
-                className="w-full rounded-md border border-gray-400 bg-gray-800"
+            <Textarea
                 value={summary}
-                onChange={(e) => setSummary(e.target.value)}
+                setValue={setSummary}
+                placeholder="Summary"
             />
         </div>
     );

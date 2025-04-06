@@ -1,4 +1,6 @@
 import { Clock } from 'react-bootstrap-icons';
+import Date from '../Input/Date';
+import Time from '../Input/Time';
 
 export default function Due({
     dueDate,
@@ -17,16 +19,11 @@ export default function Due({
 
             <div className="flex flex-row justify-between gap-9">
                 <div className="flex flex-row items-center gap-3">
-                    <input
-                        type="date"
-                        name="due-date"
-                        className="w-full rounded-md border border-gray-400 bg-gray-800"
-                        value={dueDate}
-                        onChange={(e) => setDueDate(e.target.value)}
-                    />
+                    <Date value={dueDate} setValue={setDueDate} />
+
                     <div>
                         <button
-                            className="h-6 w-6 rounded-2xl border-red-500 bg-red-800 text-center font-extrabold"
+                            className="h-6 w-6 rounded-2xl border-red-800 bg-red-500 text-center font-extrabold text-white dark:border-red-500 dark:bg-red-800 dark:text-black"
                             type="button"
                             onClick={() => {
                                 setDueDate('');
@@ -39,16 +36,11 @@ export default function Due({
                 </div>
 
                 <div className="flex flex-row items-center gap-3">
-                    <input
-                        type="time"
-                        name="due-time"
-                        className="w-full rounded-md border border-gray-400 bg-gray-800"
-                        value={dueTime}
-                        onChange={(e) => setDueTime(e.target.value)}
-                    />
+                    <Time value={dueTime} setValue={setDueTime} />
+
                     <div>
                         <button
-                            className="h-6 w-6 rounded-2xl border-red-500 bg-red-800 text-center font-extrabold"
+                            className="h-6 w-6 rounded-2xl border-red-800 bg-red-500 text-center font-extrabold text-white dark:border-red-500 dark:bg-red-800 dark:text-black"
                             type="button"
                             onClick={() => setDueTime('')}
                         >

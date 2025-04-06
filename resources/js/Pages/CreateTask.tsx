@@ -1,3 +1,4 @@
+import Button from '@/Components/Button';
 import App from '@/Layouts/App';
 import { PageProps } from '@/types';
 import { Calendar as C } from '@/types/Calendar';
@@ -23,10 +24,11 @@ export default function CreateTask({
     );
     const [dueTime, setDueTime] = useState<string>('');
     const [tags, setTags] = useState<Tag[]>([]);
+    const [description, setDescription] = useState<string>('');
 
     return (
         <App title="Create New Task">
-            <form action={route('task.store')} method="post" className='flex flex-col gap-5'>
+            <div className="flex flex-col gap-5">
                 <Calendar
                     calendars={calendars}
                     calendar={calendar}
@@ -41,14 +43,13 @@ export default function CreateTask({
                 />
                 <Priority priority={priority} setPriority={setPriority} />
                 <Tags tags={tags} setTags={setTags} all={allTags} />
-                <Description />
-
-                <input
-                    type="submit"
-                    value="Save"
-                    className="w-max rounded-md border border-blue-900 bg-blue-700 px-5 py-3"
+                <Description
+                    description={description}
+                    setDescription={setDescription}
                 />
-            </form>
+
+                <Button action={() => {}}>Save</Button>
+            </div>
         </App>
     );
 }

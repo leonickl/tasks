@@ -6,9 +6,9 @@ export default function Settings() {
         <App
             title="Settings"
             nav={[
-                <Button href={route('remotes')}>Accounts</Button>,
-                <Button href={route('logs')}>Show Logs</Button>,
-                <Button href={route('app-directory')}>Open App Folder</Button>,
+                <Button action={route('remotes')}>Accounts</Button>,
+                <Button action={route('logs')}>Show Logs</Button>,
+                <Button action={route('app-directory')}>Open App Folder</Button>,
             ]}
         />
     );

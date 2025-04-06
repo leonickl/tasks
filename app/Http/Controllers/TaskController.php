@@ -119,7 +119,7 @@ END:VCALENDAR';
     {
         return inertia('Tasks', [
             'title' => str_starts_with($tag, '@') ? 'Person '.$tag->name : 'Tag #'.$tag->name,
-            'tasks' => Tasks::make('forTag', [$tag]),
+            'tasks' => Tasks::make('forTag', $tag),
         ]);
     }
 

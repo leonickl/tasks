@@ -75,6 +75,7 @@ class Task extends Model
             'children' => $this->children,
             'dueDate' => $this->hasDue() ? $this->due_carbon->format('Y-m-d') : null,
             'dueTime' => $this->hasDueTime() ? $this->due_carbon->format('H:i') : null,
+            'dueFormatted' => $this->due_formatted,
         ];
     }
 

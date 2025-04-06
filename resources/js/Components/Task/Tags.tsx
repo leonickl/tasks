@@ -1,6 +1,7 @@
 import { Tag } from '@/types/Tag';
 import { useMemo, useState } from 'react';
 import { CircleFill } from 'react-bootstrap-icons';
+import Text from '../Input/Text';
 
 export default function Tags({
     all,
@@ -47,13 +48,12 @@ export default function Tags({
     return (
         <div className="flex flex-col gap-4">
             <label className="flex items-center gap-2">
-                <input
-                    size={20}
+                <Text
                     value={tagInput}
-                    onChange={(e) => setTagInput(e.target.value)}
-                    className="w-full rounded-md border border-gray-400 bg-gray-800 px-2 py-1 text-white"
+                    setValue={setTagInput}
                     placeholder="Search or create tag"
                 />
+
                 <button
                     type="button"
                     onClick={newTag}

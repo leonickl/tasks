@@ -2,18 +2,23 @@ import { Link } from '@inertiajs/react';
 import { ReactNode } from 'react';
 
 export default function Button({
-    href,
+    action,
     children,
+    small = false,
 }: {
-    href: string;
+    action: string | (() => void);
     children: ReactNode;
+    small?: boolean;
 }) {
-    return (
-        <Link
-            href={href}
-            className="rounded-md border border-blue-900 bg-blue-700 px-5 py-3 w-max"
-        >
+    const classes = `w-max rounded-md border border-blue-900 bg-blue-700 ${small ? 'px-3 py-1' : 'px-5 py-3'} text-gray-200`;
+
+    return typeof action === 'string' ? (
+        <Link href={action} className={classes}>
             {children}
         </Link>
+    ) : (
+        <button type="button" onClick={action} className={classes}>
+            {children}
+        </button>
     );
 }

@@ -1,5 +1,14 @@
 import { Tag as T } from '@/types/Tag';
+import { Link } from '@inertiajs/react';
 
 export default function Tag({ tag }: { tag: T }) {
-    return <>{tag}</>;
+    return (
+        <Link
+            href={route('tag', tag.id)}
+            style={{ backgroundColor: tag.color }}
+            className="whitespace-nowrap rounded-md px-3 py-1"
+        >
+            {tag.name}
+        </Link>
+    );
 }

@@ -1,14 +1,22 @@
 import { TextLeft } from 'react-bootstrap-icons';
+import Textarea from '../Input/Textarea';
 
-export default function Description() {
+export default function Description({
+    description,
+    setDescription,
+}: {
+    description: string;
+    setDescription: React.Dispatch<React.SetStateAction<string>>;
+}) {
     return (
         <div className="flex flex-row items-center gap-5">
             <TextLeft />
 
-            <textarea
-                name="description"
-                className="w-full rounded-md border border-gray-400 bg-gray-800"
-            ></textarea>
+            <Textarea
+                value={description}
+                setValue={setDescription}
+                placeholder="Description"
+            />
         </div>
     );
 }

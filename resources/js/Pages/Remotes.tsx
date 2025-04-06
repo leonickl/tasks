@@ -1,4 +1,5 @@
 import Button from '@/Components/Button';
+import Text from '@/Components/Input/Text';
 import App from '@/Layouts/App';
 import { PageProps } from '@/types';
 import { Remote } from '@/types/Remote';
@@ -11,36 +12,20 @@ export default function Remotes({ remotes }: PageProps<{ remotes: Remote[] }>) {
                 method="post"
                 className="mb-10 flex w-1/2 flex-col items-center gap-5"
             >
-                <input
-                    type="text"
-                    name="name"
+                <Text
+                    value={''}
+                    setValue={() => {}}
                     placeholder="Account name, e. g. 'Nextcloud'"
-                    className="w-full rounded-md border border-gray-400 bg-gray-800"
                 />
-                <input
-                    type="text"
-                    name="href"
+                <Text
+                    value={''}
+                    setValue={() => {}}
                     placeholder="URL for CalDav-Endpoint, e. g. 'https://next.cloud/remote.php/dav/calendars/Username'"
-                    className="w-full rounded-md border border-gray-400 bg-gray-800"
                 />
-                <input
-                    type="text"
-                    name="username"
-                    placeholder="Username"
-                    className="w-full rounded-md border border-gray-400 bg-gray-800"
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    className="w-full rounded-md border border-gray-400 bg-gray-800"
-                />
+                <Text value={''} setValue={() => {}} placeholder="Username" />
+                <Text value={''} setValue={() => {}} placeholder="Password" />
 
-                <input
-                    type="submit"
-                    value="Save"
-                    className="w-max rounded-md border border-blue-900 bg-blue-700 px-5 py-3"
-                />
+                <Button action={() => {}}>Save</Button>
             </form>
 
             {remotes.map((remote) => (
@@ -49,50 +34,33 @@ export default function Remotes({ remotes }: PageProps<{ remotes: Remote[] }>) {
                     method="post"
                     className="mb-10 flex w-1/2 flex-col items-center gap-5"
                 >
-                    <input
-                        type="text"
-                        name="name"
+                    <Text
                         value={remote.name}
+                        setValue={() => {}}
                         placeholder="Name"
-                        className="w-full rounded-md border border-gray-400 bg-gray-800"
                     />
-                    <input
-                        type="text"
-                        name="href"
+                    <Text
                         value={remote.href}
+                        setValue={() => {}}
                         placeholder="URL"
-                        className="w-full rounded-md border border-gray-400 bg-gray-800"
                     />
-                    <input
-                        type="text"
-                        name="username"
+                    <Text
                         value={remote.username}
+                        setValue={() => {}}
                         placeholder="User"
-                        className="w-full rounded-md border border-gray-400 bg-gray-800"
                     />
-                    <input
-                        type="password"
-                        name="password"
+                    <Text
                         value={remote.password}
+                        setValue={() => {}}
                         placeholder="Password"
-                        className="w-full rounded-md border border-gray-400 bg-gray-800"
                     />
 
                     <div className="flex w-full flex-row justify-evenly gap-5">
-                        <input
-                            type="submit"
-                            value="Save"
-                            className="w-max rounded-md border border-blue-900 bg-blue-700 px-5 py-3"
-                        />
+                        <Button action={() => {}}>Save</Button>
 
-                        {/* TODO: implement check */}
-                        <input
-                            type="button"
-                            value="Check"
-                            className="w-max rounded-md border border-blue-900 bg-blue-700 px-5 py-3"
-                        />
+                        <Button action={() => {}}>Check</Button>
 
-                        <Button href={route('calendars', remote.id)}>
+                        <Button action={route('calendars', remote.id)}>
                             Calendars
                         </Button>
                     </div>
