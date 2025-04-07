@@ -39,6 +39,7 @@ export default function Authenticated({
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 {Object.entries(nav).map(([key, label]) => (
                                     <NavLink
+                                        key={key}
                                         href={route(key)}
                                         active={route().current(key)}
                                     >
@@ -145,6 +146,7 @@ export default function Authenticated({
                     <div className="space-y-1 pb-3 pt-2">
                         {Object.entries(nav).map(([key, label]) => (
                             <ResponsiveNavLink
+                                key={key}
                                 href={route(key)}
                                 active={route().current(key)}
                             >

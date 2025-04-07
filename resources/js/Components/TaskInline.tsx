@@ -18,8 +18,6 @@ export default function TaskInline({
 
     const showChildren = true;
 
-    console.log(task);
-
     return (
         <div>
             {task.children.length > 0 && (
@@ -39,7 +37,7 @@ export default function TaskInline({
                         <div>{task.summary}</div>
 
                         {task.tags.map((tag) => (
-                            <Tag tag={tag} />
+                            <Tag key={tag.id} tag={tag} />
                         ))}
 
                         {indent === 0 && task.parent && (
@@ -65,6 +63,7 @@ export default function TaskInline({
             {showChildren &&
                 task.children.map((child) => (
                     <TaskInline
+                        key={child.id}
                         border={false}
                         task={child}
                         indent={indent + 1}

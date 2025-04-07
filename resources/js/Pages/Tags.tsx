@@ -11,7 +11,7 @@ export default function Tags({
         <App title={title}>
             <div className="flex flex-row flex-wrap justify-evenly gap-5">
                 {tags.map((tag) => (
-                    <Tag tag={tag} />
+                    <Tag key={tag.id} tag={tag} />
                 ))}
             </div>
         </App>

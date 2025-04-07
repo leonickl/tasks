@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('tasks', [TaskController::class, 'store'])->name('task.store');
     Route::post('tasks/{task}', [TaskController::class, 'update'])->name('task.update');
+    Route::post('tasks/{task}/complete', [TaskController::class, 'complete'])->name('task.complete');
 
     Route::get('search', [TaskController::class, 'search'])->name('search');
 

@@ -30,6 +30,7 @@ export default function Remotes({ remotes }: PageProps<{ remotes: Remote[] }>) {
 
             {remotes.map((remote) => (
                 <form
+                    key={remote.id}
                     action={route('remotes.update', remote.id)}
                     method="post"
                     className="mb-10 flex w-1/2 flex-col items-center gap-5"

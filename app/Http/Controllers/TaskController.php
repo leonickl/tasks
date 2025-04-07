@@ -75,6 +75,16 @@ class TaskController extends Controller
         return Redirect::route('tasks')->success('Updated task '.$task->id);
     }
 
+    public function complete(Task $task): RedirectResponse
+    {
+        $task->completed = request()->boolean('completed');
+
+        $task->save();
+        $task->upload();
+
+        return Redirect::route('tasks')->success('Completed task '.$task->id);
+    }
+
     public function store(): RedirectResponse
     {
         $task = new Task;

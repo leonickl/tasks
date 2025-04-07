@@ -17,6 +17,7 @@ export default function Calendars({ remote }: PageProps<{ remote: Remote }>) {
             <div className="mt-5 grid w-full grid-cols-3 gap-10">
                 {remote.calendars.map((calendar) => (
                     <div
+                        key={calendar.id}
                         className="flex flex-col justify-between gap-5 rounded-md border border-gray-400 p-5 shadow-md"
                         style={{
                             color:

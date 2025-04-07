@@ -8,8 +8,6 @@ export default function Tasks({
     tasks,
     title,
 }: PageProps<{ tasks: Task[]; title: string }>) {
-    // <livewire:task-list :filter="$filter" :params="$params ?? []"/>
-
     return (
         <App
             title={title}
@@ -19,7 +17,11 @@ export default function Tasks({
         >
             <div className="px-20">
                 {tasks.map((task, index) => (
-                    <TaskInline task={task} border={index !== 0} />
+                    <TaskInline
+                        key={task.id}
+                        task={task}
+                        border={index !== 0}
+                    />
                 ))}
 
                 {tasks.length === 0 && <b>No Tasks Found</b>}
