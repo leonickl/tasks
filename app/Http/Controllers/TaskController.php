@@ -60,10 +60,10 @@ class TaskController extends Controller
     public function update(Task $task): RedirectResponse
     {
         $task->summary = request('summary', '');
-        $task->due = ! empty(request('due-date'))
-            ? ! empty(request('due-time'))
-                ? Carbon::make(request('due-date').' '.request('due-time'))->format('Ymd\THis')
-                : Carbon::make(request('due-date'))->format('Ymd')
+        $task->due = ! empty(request('dueDate'))
+            ? ! empty(request('dueTime'))
+                ? Carbon::make(request('dueDate').' '.request('dueTime'))->format('Ymd\THis')
+                : Carbon::make(request('dueDate'))->format('Ymd')
             : '';
         $task->priority = request()->integer('priority');
         $task->tags = $this->tags();
@@ -80,7 +80,7 @@ class TaskController extends Controller
         $task = new Task;
 
         $uuid = (string) Str::uuid();
-        $calendarId = request()->integer('calendar_id');
+        $calendarId = request()->integer('calendar');
 
         $calendar = Calendar::query()->findOrFail($calendarId);
         $now = now()->format('Ymd\THis');
@@ -101,10 +101,10 @@ END:VCALENDAR';
         $task->summary = request('summary', '');
         $task->uid = $uuid;
         $task->description = request('description', '');
-        $task->due = ! empty(request('due-date'))
-            ? ! empty(request('due-time'))
-                ? Carbon::make(request('due-date').' '.request('due-time'))->format('Ymd\THis')
-                : Carbon::make(request('due-date'))->format('Ymd')
+        $task->due = ! empty(request('dueDate'))
+            ? ! empty(request('dueTime'))
+                ? Carbon::make(request('dueDate').' '.request('dueTime'))->format('Ymd\THis')
+                : Carbon::make(request('dueDate'))->format('Ymd')
             : '';
         $task->priority = request()->integer('priority');
         $task->tags = $this->tags();
@@ -150,6 +150,9 @@ END:VCALENDAR';
     public function edit(Task $task)
     {
         return inertia('EditTask', [
+            'allTags' => Tag::all(),
+            'defaultCalendar' => Calendar::default(),
+            'calendars' => Calendar::all(),
             'task' => $task,
             'tags' => Tag::all(),
         ]);
