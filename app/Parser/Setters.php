@@ -28,9 +28,18 @@ trait Setters
     {
         $this->vtodo->remove('DUE');
 
-        if ($value !== '') {
-            $this->vtodo->add('DUE', $value, ['VALUE' => 'DATE']);
+        if (! $value) {
+            return;
         }
+
+        if (str_contains($value, 'T')) {
+            $this->vtodo->add('DUE', $value);
+
+            return;
+        }
+
+        $this->vtodo->add('DUE', $value, ['VALUE' => 'DATE']);
+
     }
 
     public function setPriority(int $value): void
@@ -51,7 +60,7 @@ trait Setters
         if ($value === null || $value === '') {
             $this->vtodo->remove('RELATED-TO');
         } else {
-            $this->vtodo->{'RELATED-TO'} = $value;
+            $this->vtodo->add('RELATED-TO', $value);
         }
     }
 }
