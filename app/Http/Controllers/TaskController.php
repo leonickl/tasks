@@ -72,7 +72,7 @@ class TaskController extends Controller
         $task->save();
         $task->upload();
 
-        return Redirect::route('tasks')->success('Updated task '.$task->id);
+        return back();
     }
 
     public function complete(Task $task): RedirectResponse
@@ -82,7 +82,7 @@ class TaskController extends Controller
         $task->save();
         $task->upload();
 
-        return Redirect::route('tasks')->success('Completed task '.$task->id);
+        return back();
     }
 
     public function store(): RedirectResponse
@@ -122,7 +122,7 @@ END:VCALENDAR';
 
         $task->createAndUploadInitially();
 
-        return Redirect::route('tasks')->success('Created task '.$task->id);
+        return back();
     }
 
     public function tag(Tag $tag)
