@@ -17,7 +17,7 @@ export default function CreateTask({
             allTags={allTags}
             defaultCalendar={defaultCalendar}
             calendars={calendars}
-            save={(data) => router.post(route('task.update'), { ...data })}
+            save={(data) => router.post(route('task.store'), { ...data })}
         />
     );
 }
