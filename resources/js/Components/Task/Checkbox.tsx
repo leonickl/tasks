@@ -1,3 +1,4 @@
+import Priority from '@/Priority';
 import { Task } from '@/types/Task';
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
@@ -10,11 +11,14 @@ export default function Checkbox({ task }: { task: Task }) {
         router.post(route('task.complete', task.id), { completed: newStatus });
     }
 
+    const priority = new Priority(task.priority);
+
     return (
         <input
             type="checkbox"
             checked={completed}
             onChange={(e) => onChange(e.target.checked)}
+            style={{ accentColor: priority.color() }}
         />
     );
 }
