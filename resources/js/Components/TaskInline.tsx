@@ -1,6 +1,8 @@
 import Priority from '@/Priority';
 import { Task } from '@/types/Task';
 import { Link } from '@inertiajs/react';
+import { useState } from 'react';
+import { ArrowsCollapse, ArrowsExpand } from 'react-bootstrap-icons';
 import Markdown from './Markdown';
 import Tag from './Tag';
 import Checkbox from './Task/Checkbox';
@@ -14,21 +16,32 @@ export default function TaskInline({
     border: boolean;
     indent?: number;
 }) {
-    function toggleChildren() {}
+    const [showChildren, setShowChildren] = useState(true);
 
-    const showChildren = true;
+    function toggleChildren() {
+        setShowChildren((old) => !old);
+    }
 
     return (
         <div>
-            {task.children.length > 0 && (
-                <div onClick={toggleChildren}>{showChildren ? '-' : '+'}</div>
-            )}
-
             <div
-                className={`grid w-full grid-cols-[5rem_30rem_10rem_5rem] ${new Priority(task.priority).color()} ${border && 'border-t'} py-5`}
+                className={`grid w-full grid-cols-[5rem_auto_10rem_5rem] ${new Priority(task.priority).color()} ${border && 'border-t'} py-5`}
                 style={{ marginLeft: `${indent * 40}px` }}
             >
-                <div>
+                <div className="relative">
+                    {task.children.length > 0 && (
+                        <div
+                            onClick={toggleChildren}
+                            className="cursor-pointer absolute -left-14 h-9 top-1/2 grid -translate-y-1/2 items-center justify-center bg-blue-100 text-blue-700 border border-blue-700 p-2 rounded-xl aspect-square"
+                        >
+                            {showChildren ? (
+                                <ArrowsCollapse height={20} />
+                            ) : (
+                                <ArrowsExpand height={20} />
+                            )}
+                        </div>
+                    )}
+
                     <Checkbox task={task} />
                 </div>
 
