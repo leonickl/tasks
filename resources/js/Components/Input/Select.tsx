@@ -4,14 +4,16 @@ export default function Select({
     options,
     value,
     setValue,
+    className,
 }: {
     options: { value: number; label: string }[];
     value: number;
     setValue: (arg: number) => void;
+    className?: string | undefined;
 }) {
     return (
         <select
-            className={classes}
+            className={className ?? classes}
             value={value}
             onChange={(e) => setValue(parseInt(e.target.value))}
         >

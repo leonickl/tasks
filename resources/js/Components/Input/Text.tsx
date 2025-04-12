@@ -4,10 +4,12 @@ export default function Text({
     value,
     setValue,
     placeholder,
+    className,
 }: {
     value: string;
     setValue: (arg: string) => void;
     placeholder: string;
+    className?: string | undefined;
 }) {
     return (
         <Input
@@ -15,6 +17,7 @@ export default function Text({
             value={value}
             setValue={setValue}
             placeholder={placeholder}
+            className={className}
         />
     );
 }

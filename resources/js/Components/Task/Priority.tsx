@@ -16,7 +16,7 @@ export default function Priority({
     setPriority: React.Dispatch<React.SetStateAction<number>>;
 }) {
     return (
-        <div className="flex flex-row items-center gap-5">
+        <div className="flex flex-row items-center gap-5 px-5 py-3">
             <Flag />
 
             <div className="flex flex-1 justify-center gap-6">

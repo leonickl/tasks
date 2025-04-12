@@ -7,10 +7,12 @@ export default function Tags({
     all,
     tags,
     setTags,
+    className
 }: {
     all: Tag[];
     tags: Tag[];
     setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
+    className?: string | undefined;
 }) {
     const [tagInput, setTagInput] = useState('');
 
@@ -52,6 +54,7 @@ export default function Tags({
                     value={tagInput}
                     setValue={setTagInput}
                     placeholder="Search or create tag"
+                    className={className}
                 />
 
                 <button

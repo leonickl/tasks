@@ -6,13 +6,15 @@ export default function Calendar({
     calendars,
     calendar,
     setCalendar,
+    className,
 }: {
     calendars: C[];
     calendar: number;
     setCalendar: React.Dispatch<React.SetStateAction<number>>;
+    className?: string | undefined;
 }) {
     return (
-        <div className="flex flex-row items-center gap-5">
+        <div className="flex flex-row items-center gap-5 px-5">
             <ListCheck />
 
             <div>
@@ -23,6 +25,7 @@ export default function Calendar({
                     }))}
                     value={calendar}
                     setValue={setCalendar}
+                    className={className}
                 />
             </div>
         </div>

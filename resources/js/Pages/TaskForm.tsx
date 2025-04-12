@@ -41,34 +41,67 @@ export default function TaskForm({
         prefill?.description ?? '',
     );
 
+    function HR() {
+        return <hr className='border-gray-600' />;
+    }
+
+    const classes =
+        'border-none resize-none w-full bg-gray-100 px-2 text-gray-800 dark:bg-gray-800 dark:text-white focus:bg-gray-700 focus:outline-none focus:ring-0 px-5 py-3';
+
     return (
         <App title={title}>
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col border border-gray-600">
                 {prefill === undefined && (
-                    <Calendar
-                        calendars={calendars}
-                        calendar={calendar}
-                        setCalendar={setCalendar}
-                    />
+                    <>
+                        <Calendar
+                            calendars={calendars}
+                            calendar={calendar}
+                            setCalendar={setCalendar}
+                            className={classes}
+                        />
+
+                        <HR />
+                    </>
                 )}
 
-                <Summary summary={summary} setSummary={setSummary} />
+                <Summary
+                    summary={summary}
+                    setSummary={setSummary}
+                    className={classes}
+                />
+
+                <HR />
 
                 <Due
                     dueDate={dueDate}
                     setDueDate={setDueDate}
                     dueTime={dueTime}
                     setDueTime={setDueTime}
+                    className={classes}
                 />
+
+                <HR />
 
                 <Priority priority={priority} setPriority={setPriority} />
 
-                <Tags tags={tags} setTags={setTags} all={allTags} />
+                <HR />
+
+                <Tags
+                    tags={tags}
+                    setTags={setTags}
+                    all={allTags}
+                    className={classes}
+                />
+
+                <HR />
 
                 <Description
                     description={description}
                     setDescription={setDescription}
+                    className={classes}
                 />
+
+                <HR />
 
                 <Button
                     action={() =>
