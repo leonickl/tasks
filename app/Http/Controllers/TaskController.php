@@ -135,7 +135,7 @@ END:VCALENDAR'; // TODO: set prodid correctly
     public function tags(): array
     {
         return is_array(request('tags'))
-            ? array_map(fn (mixed $id) => Tag::find($id)->name, request('tags'))
+            ? array_map(fn (mixed $id) => Tag::get($id)->name, request('tags'))
             : [];
     }
 

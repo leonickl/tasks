@@ -31,14 +31,9 @@ class Tag extends Model
 
     public static function get(string $name, string $color = '', string $icon = ''): self
     {
-        $tag = self::query()->where('name', $name)->first();
-
-        if ($tag !== null) {
-            return $tag;
-        }
-
-        return static::create([
+        return static::firstOrCreate([
             'name' => $name,
+        ], [
             'color' => $color === '' ? self::randomColor() : $color,
             'icon' => $icon,
         ]);

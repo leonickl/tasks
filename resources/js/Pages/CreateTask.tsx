@@ -9,9 +9,11 @@ export default function CreateTask({
     allTags,
     defaultCalendar,
     calendars,
+    csrf,
 }: PageProps<{ allTags: Tag[]; defaultCalendar: C; calendars: C[] }>) {
     return (
         <TaskForm
+            csrf={csrf}
             title="Create New Task"
             auth={auth}
             allTags={allTags}

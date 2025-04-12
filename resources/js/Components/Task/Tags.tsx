@@ -1,41 +1,33 @@
 import { Tag } from '@/types/Tag';
-import { useMemo, useState } from 'react';
-import { CircleFill } from 'react-bootstrap-icons';
+import React, { useMemo, useState } from 'react';
 import Text from '../Input/Text';
 
 export default function Tags({
     all,
     tags,
     setTags,
-    className
+    className,
 }: {
     all: Tag[];
-    tags: Tag[];
-    setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
+    tags: string[];
+    setTags: React.Dispatch<React.SetStateAction<string[]>>;
     className?: string | undefined;
 }) {
     const [tagInput, setTagInput] = useState('');
 
-    function toggleTag(tag: Tag) {
-        if (tags.some((t) => t.id === tag.id)) {
-            setTags(tags.filter((t) => t.id !== tag.id));
+    function toggleTag(tag: string) {
+        if (tags.some((t) => t === tag)) {
+            setTags((old) => old.filter((t) => t !== tag));
         } else {
-            setTags([...tags, tag]);
+            setTags((old) => [...old, tag]);
         }
     }
 
     function newTag() {
         if (tagInput.trim() === '') return;
-        // Dummy tag creation logic (replace with actual logic or callback if needed)
-        const newId = Math.max(...all.map((t) => t.id), 0) + 1;
-        const newTag: Tag = {
-            id: newId,
-            name: tagInput,
-            color: '#777',
-            icon: 'tag',
-            nameWithoutPrefix: tagInput,
-        };
-        setTags((tags) => [...tags, newTag]);
+
+        setTags((old) => [...old, tagInput]);
+
         setTagInput('');
     }
 
@@ -47,9 +39,13 @@ export default function Tags({
         );
     }, [all, tagInput]);
 
+    function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
+    }
+
     return (
-        <div className="flex flex-col gap-4">
-            <label className="flex items-center gap-2">
+        <div className="flex flex-col gap-3">
+            <form onSubmit={handleSubmit} className="flex items-center gap-2">
                 <Text
                     value={tagInput}
                     setValue={setTagInput}
@@ -58,33 +54,37 @@ export default function Tags({
                 />
 
                 <button
-                    type="button"
+                    type="submit"
                     onClick={newTag}
-                    className="text-white hover:text-green-400"
+                    className="h-6 w-6 rounded-md bg-gray-500 font-extrabold text-white hover:bg-green-600"
                     title="Create new tag"
                 >
-                    <CircleFill />
+                    +
                 </button>
-            </label>
+            </form>
 
-            <div className="flex flex-wrap gap-2">
-                {filteredTags.map((tag) => {
-                    const isSelected = tags.some((t) => t.id === tag.id);
+            <div className="flex flex-wrap justify-evenly gap-2 px-5 py-3">
+                {tags.map((tag) => {
+                    const found = all.find((t) => t.name === tag);
 
                     return (
                         <div
-                            key={tag.id}
-                            className={`flex cursor-pointer items-center gap-1 rounded px-2 py-1 text-sm text-white`}
-                            style={{ backgroundColor: tag.color }}
+                            key={tag}
+                            className="flex cursor-pointer items-center gap-1 rounded px-2 py-1 text-sm text-slate-900"
                             onClick={() => toggleTag(tag)}
+                            style={{
+                                backgroundColor: found
+                                    ? found.color
+                                    : 'rgb(71 85 105)',
+                            }}
                         >
-                            <i className={`bi ${tag.icon}`} />
-                            {tag.nameWithoutPrefix}
-                            {isSelected && (
-                                <span className="ml-1 text-lg text-white/80 hover:text-white">
-                                    &times;
-                                </span>
-                            )}
+                            {found && <i className={`bi ${found.icon}`} />}
+
+                            {tag}
+
+                            <span className="ml-1 text-lg text-slate-900">
+                                &times;
+                            </span>
                         </div>
                     );
                 })}

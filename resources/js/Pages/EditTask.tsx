@@ -11,6 +11,7 @@ export default function EditTask({
     defaultCalendar,
     calendars,
     task,
+    csrf,
 }: PageProps<{
     allTags: Tag[];
     defaultCalendar: C;
@@ -19,6 +20,7 @@ export default function EditTask({
 }>) {
     return (
         <TaskForm
+            csrf={csrf}
             title={`Task #${task.id}`}
             auth={auth}
             allTags={allTags}

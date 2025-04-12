@@ -36,13 +36,15 @@ export default function TaskForm({
         prefill?.dueDate ?? new Date().toISOString().split('T')[0],
     );
     const [dueTime, setDueTime] = useState<string>(prefill?.dueTime ?? '');
-    const [tags, setTags] = useState<Tag[]>(prefill?.tags ?? []);
+    const [tags, setTags] = useState<string[]>(
+        prefill?.tags.map((tag) => tag.name) ?? [],
+    );
     const [description, setDescription] = useState<string>(
         prefill?.description ?? '',
     );
 
     function HR() {
-        return <hr className='border-gray-600' />;
+        return <hr className="border-gray-600" />;
     }
 
     const classes =
@@ -112,6 +114,7 @@ export default function TaskForm({
                             dueDate,
                             dueTime,
                             priority,
+                            tags,
                         })
                     }
                 >
