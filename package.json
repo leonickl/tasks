@@ -36,6 +36,7 @@
     },
     "dependencies": {
         "bootstrap-icons": "^1.11.3",
-        "react-bootstrap-icons": "^1.11.5"
+        "react-bootstrap-icons": "^1.11.5",
+        "react-toastify": "^11.0.5"
     }
 }
