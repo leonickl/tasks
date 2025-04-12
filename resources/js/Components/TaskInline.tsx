@@ -22,17 +22,24 @@ export default function TaskInline({
         setShowChildren((old) => !old);
     }
 
+    const now = new Date();
+    const startOfDay = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+    );
+
     return (
         <div>
             <div
-                className={`grid w-full grid-cols-[5rem_auto_10rem_5rem] ${new Priority(task.priority).color()} ${border && 'border-t'} py-5`}
+                className={`grid w-full grid-cols-[5rem_auto_10rem_5rem] ${new Priority(task.priority).color()} ${border && 'border-t border-gray-600'} py-5`}
                 style={{ marginLeft: `${indent * 40}px` }}
             >
                 <div className="relative">
                     {task.children.length > 0 && (
                         <div
                             onClick={toggleChildren}
-                            className="cursor-pointer absolute -left-14 h-9 top-1/2 grid -translate-y-1/2 items-center justify-center bg-blue-100 text-blue-700 border border-blue-700 p-2 rounded-xl aspect-square"
+                            className="absolute -left-14 top-1/2 grid aspect-square h-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-xl border border-blue-700 bg-blue-100 p-2 text-blue-700"
                         >
                             {showChildren ? (
                                 <ArrowsCollapse height={20} />
@@ -59,7 +66,15 @@ export default function TaskInline({
                     </div>
                 </div>
 
-                <div>{task.dueFormatted}</div>
+                <div
+                    className={
+                        task.dueIso &&
+                        new Date(task.dueIso) < startOfDay &&
+                        'text-red-600'
+                    }
+                >
+                    {task.dueFormatted}
+                </div>
 
                 <Link href={route('task', task.id)}>#{task.id}</Link>
 

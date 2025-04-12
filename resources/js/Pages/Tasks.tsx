@@ -8,6 +8,13 @@ export default function Tasks({
     tasks,
     title,
 }: PageProps<{ tasks: Task[]; title: string }>) {
+    function sort(one: Task, other: Task) {
+        return (
+            new Date(one.due).getTime() - new Date(other.due).getTime() ||
+            one.priority - other.priority
+        );
+    }
+
     return (
         <App
             title={title}
@@ -16,7 +23,7 @@ export default function Tasks({
             ]}
         >
             <div className="px-20">
-                {tasks.map((task, index) => (
+                {tasks.sort(sort).map((task, index) => (
                     <TaskInline
                         key={task.id}
                         task={task}
@@ -29,3 +36,4 @@ export default function Tasks({
         </App>
     );
 }
+1;
