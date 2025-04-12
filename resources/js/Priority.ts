@@ -27,4 +27,11 @@ export default class Priority {
         if (this.high()) return 'red';
         return 'gray';
     }
+
+    public textColor(): string {
+        if (this.low()) return 'lightgray';
+        if (this.mid()) return '#1d1d1d';
+        if (this.high()) return '#1d1d1d';
+        return 'white';
+    }
 }

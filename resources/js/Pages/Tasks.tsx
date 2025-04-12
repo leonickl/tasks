@@ -7,6 +7,7 @@ import { Task } from '@/types/Task';
 export default function Tasks({
     tasks,
     title,
+    csrf,
 }: PageProps<{ tasks: Task[]; title: string }>) {
     function sort(one: Task, other: Task) {
         return (
@@ -31,6 +32,7 @@ export default function Tasks({
                         key={task.id}
                         task={task}
                         border={index !== 0}
+                        csrf={csrf}
                     />
                 ))}
 

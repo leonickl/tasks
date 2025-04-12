@@ -10,7 +10,6 @@ use App\Tasks;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
 class TaskController extends Controller
@@ -75,14 +74,14 @@ class TaskController extends Controller
         return back();
     }
 
-    public function complete(Task $task): RedirectResponse
+    public function complete(Task $task)
     {
         $task->completed = request()->boolean('completed');
 
         $task->save();
         $task->upload();
 
-        return back();
+        return response()->json($task);
     }
 
     public function store(): RedirectResponse

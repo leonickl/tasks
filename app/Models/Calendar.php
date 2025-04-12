@@ -51,7 +51,7 @@ class Calendar extends Model
             $calendar->save();
         }
 
-        return self::query()->where('default', true)->first();
+        return self::query()->where('default', true)->first() ?? Calendar::first();
     }
 
     public function saveOrUpdate(): void

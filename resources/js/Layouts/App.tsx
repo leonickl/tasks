@@ -1,6 +1,7 @@
 import { Head } from '@inertiajs/react';
 import { ReactNode } from 'react';
 import AuthenticatedLayout from './AuthenticatedLayout';
+import { ToastContainer } from 'react-toastify';
 
 export default function App({
     title,
@@ -24,7 +25,7 @@ export default function App({
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
-                        <div className="flex flex-col gap-5 p-6 text-gray-900 dark:text-gray-100 items-center">
+                        <div className="flex flex-col items-center gap-5 p-6 text-gray-900 dark:text-gray-100">
                             {nav && (
                                 <nav className="flex flex-row gap-5">{nav}</nav>
                             )}
@@ -34,6 +35,8 @@ export default function App({
                     </div>
                 </div>
             </div>
+
+            <ToastContainer />
         </AuthenticatedLayout>
     );
 }

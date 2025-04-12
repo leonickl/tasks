@@ -11,10 +11,12 @@ export default function TaskInline({
     task,
     border,
     indent = 0,
+    csrf,
 }: {
     task: Task;
     border: boolean;
     indent?: number;
+    csrf: string;
 }) {
     const [showChildren, setShowChildren] = useState(true);
 
@@ -49,7 +51,7 @@ export default function TaskInline({
                         </div>
                     )}
 
-                    <Checkbox task={task} />
+                    <Checkbox task={task} csrf={csrf} />
                 </div>
 
                 <div className="flex flex-col">
@@ -95,6 +97,7 @@ export default function TaskInline({
                         border={false}
                         task={child}
                         indent={indent + 1}
+                        csrf={csrf}
                     />
                 ))}
         </div>
