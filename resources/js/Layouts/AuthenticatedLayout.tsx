@@ -16,10 +16,8 @@ export default function Authenticated({
 
     const nav = {
         dashboard: 'Dashboard',
-        settings: 'Settings',
         tasks: 'Tasks',
         filters: 'Filters',
-        sync: 'Sync',
         tags: 'Tags',
         people: 'People',
     };
@@ -82,6 +80,15 @@ export default function Authenticated({
                                         >
                                             Profile
                                         </Dropdown.Link>
+
+                                        <Dropdown.Link href={route('settings')}>
+                                            Settings
+                                        </Dropdown.Link>
+
+                                        <Dropdown.Link href={route('sync')}>
+                                            Sync
+                                        </Dropdown.Link>
+
                                         <Dropdown.Link
                                             href={route('logout')}
                                             method="post"
