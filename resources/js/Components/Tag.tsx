@@ -6,7 +6,7 @@ export default function Tag({ tag }: { tag: T }) {
         <Link
             href={route('tag', tag.id)}
             style={{ backgroundColor: tag.color }}
-            className="whitespace-nowrap rounded-md px-3 py-1"
+            className="whitespace-nowrap rounded-md px-3 py-1 text-slate-500"
         >
             {tag.name}
         </Link>

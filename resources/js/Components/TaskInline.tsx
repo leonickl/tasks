@@ -4,8 +4,8 @@ import { Link } from '@inertiajs/react';
 import { useState } from 'react';
 import { ArrowsCollapse, ArrowsExpand } from 'react-bootstrap-icons';
 import Markdown from './Markdown';
-import Tag from './Tag';
 import Checkbox from './Task/Checkbox';
+import Tag from './Tag';
 
 export default function TaskInline({
     task,
@@ -55,12 +55,14 @@ export default function TaskInline({
                 </div>
 
                 <div className="flex flex-col">
-                    <div className="flex flex-row">
+                    <div className="flex flex-row gap-5">
                         <div>{task.summary}</div>
 
-                        {task.tags.map((tag) => (
-                            <Tag key={tag.id} tag={tag} />
-                        ))}
+                        <div className='flex gap-3'>
+                            {task.tags.map((tag) => (
+                                <Tag key={tag.id} tag={tag} />
+                            ))}
+                        </div>
 
                         {indent === 0 && task.parent && (
                             <>Parent: {task.parent.summary}</>

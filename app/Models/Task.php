@@ -77,6 +77,7 @@ class Task extends Model
             'dueTime' => $this->hasDueTime() ? $this->due_carbon->format('H:i') : null,
             'dueFormatted' => $this->due_formatted,
             'dueIso' => $this->due_carbon?->toISOString(),
+            'tags' => $this->tagObjects(),
         ];
     }
 
