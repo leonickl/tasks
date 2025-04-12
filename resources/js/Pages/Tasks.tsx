@@ -10,7 +10,10 @@ export default function Tasks({
 }: PageProps<{ tasks: Task[]; title: string }>) {
     function sort(one: Task, other: Task) {
         return (
-            new Date(one.due).getTime() - new Date(other.due).getTime() ||
+            (one.dueIso &&
+                other.dueIso &&
+                new Date(one.dueIso).getTime() -
+                    new Date(other.dueIso).getTime()) ||
             one.priority - other.priority
         );
     }
@@ -36,4 +39,3 @@ export default function Tasks({
         </App>
     );
 }
-1;
