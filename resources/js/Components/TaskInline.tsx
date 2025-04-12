@@ -67,11 +67,11 @@ export default function TaskInline({
                 </div>
 
                 <div
-                    className={
+                    className={`${
                         task.dueIso &&
                         new Date(task.dueIso) < startOfDay &&
                         'text-red-600'
-                    }
+                    }`}
                 >
                     {task.dueFormatted}
                 </div>
