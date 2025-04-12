@@ -14,11 +14,24 @@ export default function Checkbox({ task }: { task: Task }) {
     const priority = new Priority(task.priority);
 
     return (
-        <input
-            type="checkbox"
-            checked={completed}
-            onChange={(e) => onChange(e.target.checked)}
-            style={{ accentColor: priority.color() }}
-        />
+        <div className="relative">
+            <input
+                type="checkbox"
+                id="custom-checkbox"
+                checked={completed}
+                onChange={(e) => onChange(e.target.checked)}
+                className="peer hidden"
+            />
+
+            <label
+                htmlFor="custom-checkbox"
+                className="border-accent-dark m-[3px] flex h-[15px] w-[15px] cursor-pointer items-center justify-center rounded-[3px] border-2 bg-transparent text-lg font-bold text-transparent peer-checked:leading-[1.4] peer-checked:text-white"
+                style={{ borderColor: priority.color() }}
+            >
+                <span className="pointer-events-none relative -top-[6px] left-[2px] select-none">
+                    &times;
+                </span>
+            </label>
+        </div>
     );
 }
