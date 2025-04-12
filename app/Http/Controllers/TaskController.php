@@ -106,7 +106,7 @@ DTSTAMP:'.$now.'
 CREATED:'.$now.'
 LAST-MODIFIED:'.$now.'
 END:VTODO
-END:VCALENDAR';
+END:VCALENDAR'; // TODO: set prodid correctly
         $task->completed = false;
         $task->summary = request('summary', '');
         $task->uid = $uuid;
