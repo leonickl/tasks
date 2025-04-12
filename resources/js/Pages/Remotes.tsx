@@ -3,8 +3,19 @@ import Text from '@/Components/Input/Text';
 import App from '@/Layouts/App';
 import { PageProps } from '@/types';
 import { Remote } from '@/types/Remote';
+import { router } from '@inertiajs/react';
+import { useState } from 'react';
 
 export default function Remotes({ remotes }: PageProps<{ remotes: Remote[] }>) {
+    const [name, setName] = useState('');
+    const [href, setHref] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    function save() {
+        router.post(route('remotes.store'), { name, href, username, password });
+    }
+
     return (
         <App title="Accounts">
             <form
@@ -13,19 +24,27 @@ export default function Remotes({ remotes }: PageProps<{ remotes: Remote[] }>) {
                 className="mb-10 flex w-1/2 flex-col items-center gap-5"
             >
                 <Text
-                    value={''}
-                    setValue={() => {}}
+                    value={name}
+                    setValue={setName}
                     placeholder="Account name, e. g. 'Nextcloud'"
                 />
                 <Text
-                    value={''}
-                    setValue={() => {}}
+                    value={href}
+                    setValue={setHref}
                     placeholder="URL for CalDav-Endpoint, e. g. 'https://next.cloud/remote.php/dav/calendars/Username'"
                 />
-                <Text value={''} setValue={() => {}} placeholder="Username" />
-                <Text value={''} setValue={() => {}} placeholder="Password" />
+                <Text
+                    value={username}
+                    setValue={setUsername}
+                    placeholder="Username"
+                />
+                <Text
+                    value={password}
+                    setValue={setPassword}
+                    placeholder="Password"
+                />
 
-                <Button action={() => {}}>Save</Button>
+                <Button action={save}>Save</Button>
             </form>
 
             {remotes.map((remote) => (
