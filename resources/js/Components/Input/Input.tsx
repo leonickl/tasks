@@ -16,13 +16,12 @@ export default function Input({
     placeholder?: string | undefined;
     className?: string | undefined;
 }) {
-    const textareaRef = useRef(null);
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setValue(e.target.value);
 
         if (!textareaRef.current) return;
-
         // Reset height to auto to shrink first
         textareaRef.current.style.height = 'auto';
 
