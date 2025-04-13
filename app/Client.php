@@ -195,12 +195,13 @@ readonly class Client
                 'If-Match' => $task->etag,
                 'Content-Length' => strlen($task->ical),
             ])
-            // do not use ->put() here - the server doesn't like it
-            ->send('PUT', $task->full_href, ['body' => $task->ical])
-            ->body();
+              // do not use ->put() here - the server doesn't like it
+            ->send('PUT', $task->full_href, ['body' => $task->ical]);
 
-        if (trim($response) !== '') {
-            $xml = simplexml_load_string($response);
+        $body = $response->body();
+
+        if (trim($body) !== '') {
+            $xml = simplexml_load_string($body);
 
             $xml->registerXPathNamespace('d', 'DAV:');
 
@@ -214,7 +215,7 @@ readonly class Client
                     }
                 }
 
-                throw new CalDavException($response, $task->ical);
+                throw new CalDavException($response->headers(), $body, $task->ical);
             }
         }
 
