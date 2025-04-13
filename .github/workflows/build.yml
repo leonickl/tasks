@@ -1,62 +1,48 @@
-name: Build & Deploy Laravel App with Docker
+name: Build and Push Laravel Sail Docker Image
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
-  build-and-push:
+  sail-build:
     runs-on: ubuntu-latest
 
-    env:
-      IMAGE_NAME: yourusername/tasks
-      IMAGE_TAG: latest
+    services:
+      docker:
+        image: docker:20.10.7-din
 
     steps:
-      # === Checkout Repo ===
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # === Set Up PHP & Composer ===
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          extensions: mbstring, bcmath, pdo, zip
-          tools: composer
-
-      # === Install Composer Dependencies ===
-      - name: Install PHP dependencies
-        run: composer install --no-dev --prefer-dist --optimize-autoloader
-
-      # === Set Up Node.js ===
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '22'
-
-      # === Install Node Modules & Build Assets ===
-      - name: Install and build frontend
-        run: |
-          npm ci
-          npm run build
-
-      # === Set up Docker (no need if already installed on runner) ===
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # === Log in to Docker Hub ===
-      - name: Log in to Docker Hub
+      - name: Set up PHP with Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install dependencies
+        run: |
+          composer install
+          ./vendor/bin/sail up -d
+        env:
+          COMPOSER_NO_INTERACTION: 1
+
+      - name: Authenticate with Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # === Build and Push Docker Image ===
-      - name: Build and Push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+      - name: Build Sail Image
+        run: |
+          ./vendor/bin/sail build --no-cache
+
+      - name: Tag and Push Docker Image
+        run: |
+          docker tag laravel.test ${{ secrets.DOCKERHUB_USERNAME }}/your-laravel-app:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/your-laravel-app:latest
