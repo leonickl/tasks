@@ -48,7 +48,7 @@ export default function TaskForm({
     }
 
     const classes =
-        'border-none resize-none w-full bg-gray-100 px-2 text-gray-800 dark:bg-gray-800 dark:text-white focus:bg-gray-700 focus:outline-none focus:ring-0 px-5 py-3';
+        'border-none resize-none w-full px-2 text-gray-800 dark:bg-gray-800 dark:text-white dark:focus:bg-gray-700 focus:bg-gray-100 focus:outline-none focus:ring-0 px-5 py-3';
 
     return (
         <App title={title}>
@@ -105,21 +105,24 @@ export default function TaskForm({
 
                 <HR />
 
-                <Button
-                    action={() =>
-                        save({
-                            calendar,
-                            summary,
-                            description,
-                            dueDate,
-                            dueTime,
-                            priority,
-                            tags,
-                        })
-                    }
-                >
-                    Save
-                </Button>
+                <div className='flex justify-center py-3'>
+                    <Button
+                        action={() =>
+                            save({
+                                calendar,
+                                summary,
+                                description,
+                                dueDate,
+                                dueTime,
+                                priority,
+                                tags,
+                            })
+                        }
+                        small
+                    >
+                        Save
+                    </Button>
+                </div>
             </div>
         </App>
     );
